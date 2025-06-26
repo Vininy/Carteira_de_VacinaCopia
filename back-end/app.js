@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import { sequelize } from './config/db.js';
+import cors from 'cors';
 
 dotenv.config();
 
@@ -19,3 +20,7 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Servidor rodando na porta ${PORT}`);
 });
+
+app.use(cors({
+  origin: 'http://127.0.0.1:5500'  // front-end local autorizado
+}));
