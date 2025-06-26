@@ -28,18 +28,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
-            usuarios.push({
-                id: Date.now(),
-                nome,
-                cpf,
-                dataNascimento,
-                email,
-                senha
+            fetch('https://carteira-de-vacina.onrender.com/api/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ nome, cpf, email, senha })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert('Cadastro realizado com sucesso!');
+                    window.location.href = 'login.html';
+                }
+            })
+            .catch(error => {
+                console.error('Erro no cadastro:', error);
+                alert('Erro ao cadastrar usuário');
             });
-
-            localStorage.setItem('usuarios', JSON.stringify(usuarios));
-
-            alert('Cadastro realizado com sucesso!');
             window.location.href = 'login.html';
         });
     }
@@ -51,20 +57,25 @@ document.addEventListener('DOMContentLoaded', function() {
             const loginEmail = document.getElementById('loginEmail').value;
             const loginSenha = document.getElementById('loginSenha').value;
 
-            let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-
-            const usuarioLogado = usuarios.find(user =>
-                (user.email === loginEmail || user.cpf === loginEmail) && user.senha === loginSenha
-            );
-
-            if (usuarioLogado) {
-                localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
-                alert('Login realizado com sucesso!');
-                // Redirecionar para a tela da carteira de vacinação (exemplo)
-                window.location.href = 'carteira.html';
-            } else {
-                alert('Email/CPF ou senha incorretos.');
-            }
+            fetch('https://carteira-de-vacina.onrender.com/api/login', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email: loginEmail, senha: loginSenha })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.token) {
+                    localStorage.setItem('token', data.token); // 🔐 armazena o JWT
+                    alert('Login realizado com sucesso!');
+                    window.location.href = 'carteira.html';
+                } else {
+                    alert(data.error || 'Erro ao fazer login');
+                }
+            })
+            .catch(error => {
+                console.error('Erro no login:', error);
+                alert('Erro ao tentar login');
+            });
         });
     }
 });
