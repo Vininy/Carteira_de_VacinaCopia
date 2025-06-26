@@ -1,4 +1,3 @@
-// Função para cadastrar usuário
 document.addEventListener('DOMContentLoaded', function() {
     const cadastroForm = document.getElementById('cadastroForm');
     const loginForm = document.getElementById('loginForm');
@@ -16,15 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
             if (senha !== confirmarSenha) {
                 alert('As senhas não coincidem.');
-                return;
-            }
-
-            let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
-
-            // Verificar se o email ou CPF já estão cadastrados
-            const usuarioExistente = usuarios.find(user => user.email === email || user.cpf === cpf);
-            if (usuarioExistente) {
-                alert('Email ou CPF já cadastrado.');
                 return;
             }
 
@@ -46,7 +36,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 console.error('Erro no cadastro:', error);
                 alert('Erro ao cadastrar usuário');
             });
-            window.location.href = 'login.html';
         });
     }
 
