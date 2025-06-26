@@ -9,20 +9,31 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://127.0.0.1:5500'  // front-end local autorizado
+  origin: 'http://127.0.0.1:5500'  // liberar front local
 }));
 
 app.use(express.json());
 
-// Test DB
-sequelize.authenticate()
-  .then(() => console.log('🎉 Conectado ao PostgreSQL!'))
-  .catch(err => console.error('Erro ao conectar:', err));
+// Função async para conectar, sincronizar e iniciar servidor
+async function startServer() {
+  try {
+    await sequelize.authenticate();
+    console.log('🎉 Conectado ao PostgreSQL!');
 
-// Rotas da API
-app.use('/api', authRoutes);
+    // Sincroniza os modelos e cria as tabelas se não existirem
+    await sequelize.sync();
 
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`🚀 Servidor rodando na porta ${PORT}`);
-});
+    // Rotas
+    app.use('/api', authRoutes);
+
+    const PORT = process.env.PORT || 3000;
+    app.listen(PORT, () => {
+      console.log(`🚀 Servidor rodando na porta ${PORT}`);
+    });
+
+  } catch (error) {
+    console.error('Erro ao iniciar servidor:', error);
+  }
+}
+
+startServer();
