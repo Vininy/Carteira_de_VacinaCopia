@@ -1,0 +1,203 @@
+/* Estilos para a página geral */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f2f5; /* Fundo cinza claro */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.main-screen-container {
+    background-color: white;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 800px; /* Largura máxima do conteúdo, ajuste conforme necessário */
+    min-height: 100vh; /* Garante que ocupe a altura da viewport */
+    padding: 30px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Cabeçalho da tela de vacinas */
+.vacina-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    margin-bottom: 25px;
+}
+
+.vacina-header-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.8em; /* Tamanho dos ícones */
+    color: #28a745; /* Cor dos ícones */
+}
+
+.vacina-header h1 {
+    font-size: 2.2em;
+    color: #333;
+    margin: 0;
+    flex-grow: 1; /* Ocupa o espaço central */
+    text-align: center;
+}
+
+.vacina-header-right .home-icon {
+    font-size: 2.5em; /* Tamanho do ícone de casa */
+    color: #333; /* Cor do ícone de casa */
+    text-decoration: none;
+    background-color: #e0e0e0; /* Fundo cinza arredondado */
+    border-radius: 50%;
+    padding: 5px 10px; /* Ajuste para o círculo */
+    display: inline-flex; /* Para centralizar o ícone */
+    justify-content: center;
+    align-items: center;
+}
+
+/* Botões de filtro por idade */
+.age-filters {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 30px;
+    
+    border-radius: 10px;
+    padding: 5px;
+    gap: 10px; /* Espaçamento entre os botões */
+ 
+}
+
+.filter-button {
+    background-color: transparent;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #555;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background-color 0.3s, color 0.3s;
+    flex-grow: 1; /* Para que os botões ocupem o espaço igualmente */
+    text-align: center;
+}
+
+.filter-button:hover {
+    background-color: #ddd;
+}
+
+.filter-button.active {
+    background-color: #007bff; /* Cor do botão ativo */
+    color: white;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Contêiner das listas de vacinas */
+.vaccine-list-container {
+    flex-grow: 1; /* Permite que a lista de vacinas ocupe o espaço restante */
+}
+
+/* Seções de vacinas (por idade) */
+.vaccine-section {
+    margin-bottom: 25px;
+}
+
+.vaccine-section.hidden {
+    display: none; /* Oculta as seções que não estão ativas */
+}
+
+.vaccine-section h3 {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 20px;
+    text-align: center;
+    border-bottom: 1px dashed #ddd; /* Linha divisória */
+    padding-bottom: 10px;
+}
+
+/* Cards de vacinas individuais */
+.vaccine-card {
+    background-color: #f8f9fa; /* Fundo levemente cinza para os cards */
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+
+.vaccine-details {
+    flex-grow: 1; /* Permite que os detalhes ocupem o máximo de espaço */
+}
+
+.vaccine-card h3 {
+    font-size: 1.1em;
+    color: #007bff; /* Título da vacina em azul, como na imagem */
+    margin: 0 0 5px 0;
+    font-weight: bold;
+    text-align: left; /* Alinha o título do card à esquerda */
+    border-bottom: none; /* Remove a borda para os títulos dos cards */
+    padding-bottom: 0;
+}
+
+.vaccine-card .vaccine-description {
+    font-size: 0.9em;
+    color: #555;
+    margin: 0 0 5px 0;
+    line-height: 1.4;
+}
+
+.vaccine-card .vaccine-diseases {
+    font-size: 0.8em;
+    color: #777;
+    margin: 0;
+    font-style: italic;
+}
+
+/* Botão "Registrar Vacina" */
+.register-vaccine-button {
+    background-color: #28a745; /* Cor verde para "Registrar Vacina" */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 8px 12px;
+    font-size: 0.9em;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    white-space: nowrap; /* Evita que o texto quebre */
+}
+
+.register-vaccine-button:hover {
+    background-color: #218838;
+}
+
+/* Estilo para botão de vacina já registrada (opcional, para feedback visual) */
+.register-vaccine-button.registered {
+    background-color: #6c757d; /* Cor cinza para vacina registrada */
+    cursor: not-allowed;
+}
+
+/* Botão "Confirmar Registro" */
+.confirm-register-button {
+    width: 100%;
+    padding: 15px;
+    background-color: #28a745; /* Verde, como o botão "Confirmar Registro" */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1.2em;
+    font-weight: bold;
+    margin-top: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+.confirm-register-button:hover {
+    background-color: #218838;
+}

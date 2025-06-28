@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastrar Vacinas - Carteira de Vacinação</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="cadastrarVacinas.css">
+</head>
+<body>
+    <div class="main-screen-container">
+        <header class="vacina-header">
+            <div class="vacina-header-left">
+                <span class="icon-vacina">&#x1F489;</span>
+                <span class="icon-check">&#x2705;</span>
+            </div>
+            <h1>Cadastrar Vacina</h1>
+            <div class="vacina-header-right">
+                <a href="telaPrincipal.html" class="home-icon">&#x2302;</a>
+            </div>
+        </header>
+
+        <div class="age-filters">
+            <button class="filter-button active" data-age-group="18-plus">18+ anos</button>
+            <button class="filter-button" data-age-group="20-29-anos">20-29 anos</button>
+            <button class="filter-button" data-age-group="30-59-anos">30-59 anos</button>
+            <button class="filter-button" data-age-group="60-plus">60+ anos</button>
+        </div>
+
+        <div class="vaccine-list-container">
+            <div class="vaccine-section" id="section-18-plus">
+                <div class="vaccine-card">
+                    <div class="vaccine-details">
+                        <h3>Vacina Difteria, Tétano, Pertussis (dTpa - acelular)</h3>
+                        <p class="vaccine-description">
+                            Uma dose - Reforço a cada 10 ou 5 anos, em caso de ferimentos graves <br>
+                            Recomendadas para profissionais da saúde, parteiras tradicionais e estagiários da saúde, que atuam em maternidades e unidades de internação neonatal - UTI/UCI convencional e UCI Canguru, atendendo recém-nascidos
+                        </p>
+                        <p class="vaccine-diseases">Doenças evitadas: Difteria, Tétano e Coqueluche</p>
+                    </div>
+                    <button class="register-vaccine-button" data-vaccine-id="dtpa18">Registrar Vacina</button>
+                </div>
+                <div class="vaccine-card">
+                    <div class="vaccine-details">
+                        <h3>Vacina Tétano(dTpa - acelular)</h3>
+                        <p class="vaccine-description">
+                            Uma dose - Reforço a cada 10 ou 5 anos, em caso de ferimentos graves <br>
+                            Recomendadas para profissionais da saúde, parteiras
+                        </p>
+                    </div>
+                    <button class="register-vaccine-button" data-vaccine-id="tetano18">Registrar Vacina</button>
+                </div>
+                <div class="vaccine-card">
+                    <div class="vaccine-details">
+                        <h3>Vacina Pertussis (dTpa - acelular)</h3>
+                        <p class="vaccine-description">
+                            Uma dose - Reforço a cada 10 ou 5 anos, em caso de ferimentos graves <br>
+                            Recomendadas para profissionais da saúde, parteiras
+                        </p>
+                    </div>
+                    <button class="register-vaccine-button" data-vaccine-id="pertussis18">Registrar Vacina</button>
+                </div>
+                <div class="vaccine-card">
+                    <div class="vaccine-details">
+                        <h3>Vacina Febre Amarela(dTpa - acelular)</h3>
+                        <p class="vaccine-description">Uma dose</p>
+                        <p class="vaccine-description">Recomendadas para profissionais da saúde, parteiras</p>
+                    </div>
+                    <button class="register-vaccine-button" data-vaccine-id="febreamarela18">Registrar Vacina</button>
+                </div>
+            </div>
+
+            <div class="vaccine-section hidden" id="section-20-29-anos">
+                <div class="vaccine-card">
+                    <div class="vaccine-details">
+                        <h3>Vacina Tríplice viral</h3>
+                        <p class="vaccine-description">Duas doses</p>
+                        <p class="vaccine-diseases">Doenças evitadas: Sarampo, Caxumba e Rubéola</p>
+                    </div>
+                    <button class="register-vaccine-button" data-vaccine-id="triplice20">Registrar Vacina</button>
+                </div>
+            </div>
+
+            <div class="vaccine-section hidden" id="section-30-59-anos">
+                <div class="vaccine-card">
+                    <div class="vaccine-details">
+                        <h3>Vacina Tríplice viral</h3>
+                        <p class="vaccine-description">Uma dose - Verificar situação vacinal anterior</p>
+                        <p class="vaccine-diseases">Doenças evitadas: Sarampo, Caxumba e Rubéola</p>
+                    </div>
+                    <button class="register-vaccine-button" data-vaccine-id="triplice30">Registrar Vacina</button>
+                </div>
+            </div>
+
+            <div class="vaccine-section hidden" id="section-60-plus">
+                <div class="vaccine-card">
+                    <div class="vaccine-details">
+                        <h3>Vacina Hepatite B (HB - recombinante)</h3>
+                        <p class="vaccine-description">três doses, de acordo com histórico vacinal</p>
+                        <p class="vaccine-diseases">Doenças evitadas: Hepatite B</p>
+                    </div>
+                    <button class="register-vaccine-button" data-vaccine-id="hepatiteB60">Registrar Vacina</button>
+                </div>
+                <div class="vaccine-card">
+                    <div class="vaccine-details">
+                        <h3>Vacina Difteria e Tétano (dT)</h3>
+                        <p class="vaccine-description">três doses, de acordo com histórico vacinal | Reforço a cada 10 anos ou a cada 5 anos em caso de ferimentos graves</p>
+                        <p class="vaccine-diseases">Doenças evitadas: Difteria e Tétano</p>
+                    </div>
+                    <button class="register-vaccine-button" data-vaccine-id="dt60">Registrar Vacina</button>
+                </div>
+                <div class="vaccine-card">
+                    <div class="vaccine-details">
+                        <h3>Vacina Febre Amarela (VFA - atenuada)</h3>
+                        <p class="vaccine-diseases">Doenças evitadas: Febre Amarela</p>
+                    </div>
+                    <button class="register-vaccine-button" data-vaccine-id="febreAmarela60">Registrar Vacina</button>
+                </div>
+            </div>
+        </div>
+
+        <button id="confirmRegisterButton" class="confirm-register-button">Confirmar Registro</button>
+    </div>
+
+    <script src="cadastrarVacinas.js"></script>
+</body>
+</html>
