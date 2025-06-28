@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (usuarioLogado) {
                         localStorage.setItem('usuarioLogado', JSON.stringify(usuarioLogado));
                         alert('Login local realizado com sucesso!');
-                        window.location.href = 'carteira.html';
+                        window.location.href = 'telaPrincipal.html';
                     } else {
                         alert(data.error || 'Email/CPF ou senha incorretos.');
                     }
