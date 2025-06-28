@@ -105,7 +105,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 if (data.token) {
                     localStorage.setItem('token', data.token);
                     alert('Login realizado com sucesso!');
-                    window.location.href = 'carteira.html';
+                    window.location.href = 'telaPrincipal.html';
                 } else {
                     // Fallback: login com localStorage
                     let usuarios = JSON.parse(localStorage.getItem('usuarios')) || [];
