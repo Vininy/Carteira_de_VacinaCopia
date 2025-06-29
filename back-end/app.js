@@ -26,7 +26,7 @@ app.use('/api', vaccineRoutes);
 async function startServer() {
   try {
     await sequelize.authenticate();
-    await sequelize.sync({ force: true }); // ou alter: true
+    await sequelize.sync();
     console.log('🎉 Banco conectado');
 
     const PORT = process.env.PORT || 3000;

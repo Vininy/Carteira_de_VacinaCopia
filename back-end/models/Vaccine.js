@@ -10,13 +10,13 @@ export const Vaccine = sequelize.define('Vaccine', {
     type: DataTypes.TEXT,
     allowNull: true
   },
-  faixa_etaria: {
-    type: DataTypes.STRING,
-    allowNull: true
-  },
   codigo: {
     type: DataTypes.STRING,
     allowNull: false,
     unique: true
   }
+}, {
+  tableName: 'Vaccines', // nome da tabela que você tem no banco
+  timestamps: false    // se não quiser campos createdAt e updatedAt
 });
+
