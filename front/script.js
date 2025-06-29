@@ -81,11 +81,12 @@ document.addEventListener('DOMContentLoaded', function () {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({ email: loginEmail, senha: loginSenha }),
-                    credentials: 'include' // Envia cookies para manter sessão
+                    credentials: 'include' // se você usa cookies; se não, pode remover
                 })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.success || !data.error) {
+                    if (data.token) { // token recebido do backend
+                        localStorage.setItem('token', data.token); // salva no localStorage
                         alert('Login realizado com sucesso!');
                         window.location.href = 'telaPrincipal.html';
                     } else {
@@ -98,6 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 });
             });
         }
+
 
     /* Cadastrar Vacinas */
     if (formCadastrarVacinas) {
