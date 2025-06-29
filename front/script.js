@@ -112,10 +112,11 @@ document.addEventListener('DOMContentLoaded', function () {
             fetch('https://carteira-de-vacina.onrender.com/api/vacinas', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
                 },
                 credentials: 'include', // Envia cookies para autenticação
-                body: JSON.stringify({ vacinas: vacinasSelecionadas })
+                body: JSON.stringify({ vacinas: Array.from(selectedVaccines) })
             })
             .then(response => response.json())
             .then(data => {
