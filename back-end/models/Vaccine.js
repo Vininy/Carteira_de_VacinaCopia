@@ -16,7 +16,6 @@ export const Vaccine = sequelize.define('Vaccine', {
     unique: true
   }
 }, {
-  tableName: 'vaccines',      
+  tableName: 'vacinas',       
   freezeTableName: true       
 });
-
