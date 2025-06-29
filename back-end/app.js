@@ -17,8 +17,8 @@ app.use(cors({
 app.use(express.json());
 
 // ✅ Registrar rotas DEPOIS do app ser criado
-app.use('/api/auth', authRoutes);
-app.use('/api/vacinas', vaccineRoutes);
+app.use('/api', authRoutes);
+app.use('/api', vaccineRoutes);
 
 // Iniciar servidor
 async function startServer() {
@@ -29,7 +29,7 @@ async function startServer() {
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
-      console.log(`🚀 Servidor rodando na porta ${PORT}`);
+      console.log('🚀 Servidor rodando na porta ${PORT}');
     });
   } catch (error) {
     console.error('Erro ao iniciar servidor:', error);
