@@ -28,4 +28,7 @@ export const User = sequelize.define('User', {
     type: DataTypes.STRING,
     allowNull: true
   }
+}, {
+  tableName: 'users', // nome exato da tabela que está no seu banco (verifique com \d no psql)
+  freezeTableName: true // impede pluralização automática
 });
