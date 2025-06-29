@@ -29,7 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
             const nome = document.getElementById('nome').value;
             const cpf = document.getElementById('cpf').value;
             const dataNascimento = document.getElementById('dataNascimento').value;
-            const email = document.getElementById('email')?.value || '';
+            const email = document.getElementById('email').value || '';
             const senha = document.getElementById('senha').value;
             const confirmarSenha = document.getElementById('confirmarSenha').value;
             const tipoSanguineo = document.getElementById('tipoSanguineo')?.value || '';

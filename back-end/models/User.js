@@ -8,16 +8,24 @@ export const User = sequelize.define('User', {
   },
   email: {
     type: DataTypes.STRING,
-    unique: true,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   cpf: {
     type: DataTypes.STRING,
-    unique: true,
-    allowNull: false
+    allowNull: false,
+    unique: true
   },
   senha: {
     type: DataTypes.STRING,
     allowNull: false
+  },
+  dataNascimento: {
+    type: DataTypes.DATEONLY,
+    allowNull: false
+  },
+  tipoSanguineo: {
+    type: DataTypes.STRING,
+    allowNull: true
   }
 });
