@@ -5,27 +5,26 @@ import authRoutes from './routes/authRoutes.js';
 import vaccineRoutes from './routes/vaccineRoutes.js';
 import { sequelize } from './config/db.js';
 
-// Importa os models e associações
-import './models/User.js';
-import './models/Vaccine.js';
-import './models/UserVaccine.js';
-
 dotenv.config();
 
 const app = express();
 
+// ✅ Configurar CORS e JSON
 app.use(cors({
   origin: 'http://127.0.0.1:5500',
   credentials: true
 }));
 app.use(express.json());
 
+// ✅ Registrar rotas DEPOIS do app ser criado
 app.use('/api', authRoutes);
 app.use('/api', vaccineRoutes);
 
+// Iniciar servidor
 async function startServer() {
   try {
     await sequelize.authenticate();
+    await sequelize.sync();
     console.log('🎉 Banco conectado');
 
     const PORT = process.env.PORT || 3000;
