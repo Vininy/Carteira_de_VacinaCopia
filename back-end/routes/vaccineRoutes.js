@@ -1,13 +1,10 @@
 import express from 'express';
-import { registerVaccines, getUserVaccines } from '../controllers/vaccineController.js';
-import { verificarToken } from '../middleware/verificarToken.js';
+import { getUserVaccines, registerVaccines } from '../controllers/vaccineController.js';
+import { verificarToken } from '../middlewares/verificarToken.js';
 
 const router = express.Router();
 
-// Rota para registrar vacinas (POST /api/vacinas)
-router.post('/vacinas', verificarToken, registerVaccines);
-
-// Rota para obter vacinas do usuário logado (GET /api/vacinas)
-router.get('/vacinas', verificarToken, getUserVaccines);
+router.get('/vaccines', verificarToken, getUserVaccines);
+router.post('/vaccines', verificarToken, registerVaccines);
 
 export default router;

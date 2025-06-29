@@ -40,3 +40,39 @@ document.addEventListener('DOMContentLoaded', async () => {
     window.location.href = 'login.html';
   }
 });
+
+function atualizarTabelaVacinas(vacinas) {
+  const tbody = document.querySelector('tbody');
+  tbody.innerHTML = ''; // limpa linhas antigas
+
+  vacinas.forEach(vacina => {
+    const tr = document.createElement('tr');
+    tr.dataset.status = vacina.aplicada ? 'complete' : 'pending';
+    tr.dataset.next = 'false'; // ou lógica pra próxima dose
+
+    tr.innerHTML = `
+      <td>${vacina.nome}</td>
+      <td>--</td> <!-- Dose, você pode adaptar -->
+      <td>${vacina.dataAplicacao || '-'}</td>
+      <td>--</td> <!-- Próxima dose, adaptar -->
+      <td>
+        <div class="status ${vacina.aplicada ? 'status-completa' : 'status-pendente'}">
+          <div class="dot"></div>
+          <span>${vacina.aplicada ? 'Completa' : 'Pendente'}</span>
+        </div>
+      </td>
+    `;
+
+    tbody.appendChild(tr);
+  });
+}
+
+// Exemplo de fetch + atualização da tabela
+const token = localStorage.getItem('token'); // ou de onde guarda o token
+
+fetch('/api/vaccines', {
+  headers: { 'Authorization': 'Bearer ' + token }
+})
+  .then(res => res.json())
+  .then(data => atualizarTabelaVacinas(data))
+  .catch(console.error);

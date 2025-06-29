@@ -80,31 +80,78 @@
   </div>
 
   <script>
-    const buttons = document.querySelectorAll('.stat');
+  // Função para atualizar a tabela com as vacinas do usuário
+  function atualizarTabelaVacinas(vacinas) {
+    const tbody = document.querySelector('tbody');
+    tbody.innerHTML = ''; // limpa linhas antigas
+
+    vacinas.forEach(vacina => {
+      const tr = document.createElement('tr');
+      tr.dataset.status = vacina.aplicada ? 'complete' : 'pending';
+      tr.dataset.next = 'false'; // aqui você pode implementar a lógica da próxima dose
+
+      tr.innerHTML = `
+        <td>${vacina.nome}</td>
+        <td>--</td> <!-- Dose, adapte se tiver info -->
+        <td>${vacina.dataAplicacao ? new Date(vacina.dataAplicacao).toLocaleDateString('pt-BR') : '-'}</td>
+        <td>--</td> <!-- Próxima dose, adapte se quiser -->
+        <td>
+          <div class="status ${vacina.aplicada ? 'status-completa' : 'status-pendente'}">
+            <div class="dot"></div>
+            <span>${vacina.aplicada ? 'Completa' : 'Pendente'}</span>
+          </div>
+        </td>
+      `;
+
+      tbody.appendChild(tr);
+    });
+
+    // Atualiza os contadores
+    atualizarContadores();
+  }
+
+  // Função para atualizar os contadores no topo da página
+  function atualizarContadores() {
     const rows = document.querySelectorAll('tbody tr');
-    const updateCounts = () => {
-      document.querySelector('[data-filter="all"] .count').textContent = rows.length;
-      document.querySelector('[data-filter="applied"] .count').textContent = document.querySelectorAll('tbody tr[data-status="complete"]').length;
-      document.querySelector('[data-filter="pending"] .count').textContent = document.querySelectorAll('tbody tr[data-status="pending"]').length;
-      document.querySelector('[data-filter="next"] .count').textContent = document.querySelectorAll('tbody tr[data-next="true"]').length;
-    };
+    document.querySelector('[data-filter="all"] .count').textContent = rows.length;
+    document.querySelector('[data-filter="applied"] .count').textContent = document.querySelectorAll('tbody tr[data-status="complete"]').length;
+    document.querySelector('[data-filter="pending"] .count').textContent = document.querySelectorAll('tbody tr[data-status="pending"]').length;
+    document.querySelector('[data-filter="next"] .count').textContent = document.querySelectorAll('tbody tr[data-next="true"]').length;
+  }
 
-    buttons.forEach(btn => btn.addEventListener('click', () => {
-      buttons.forEach(b => b.classList.remove('selected'));
-      btn.classList.add('selected');
-      const filter = btn.dataset.filter;
-      rows.forEach(row => {
-        row.style.display = (
-          filter === 'all' ||
-          (filter === 'pending' && row.dataset.status === 'pending') ||
-          (filter === 'applied' && row.dataset.status === 'complete') ||
-          (filter === 'next' && row.dataset.next === 'true')
-        ) ? '' : 'none';
+  // Função para carregar os dados da API
+  async function carregarVacinas() {
+    try {
+      const token = localStorage.getItem('token'); // Ajuste conforme onde o token está salvo
+      if (!token) {
+        alert('Usuário não autenticado!');
+        return;
+      }
+
+      const response = await fetch('/api/vaccines', {
+        headers: {
+          'Authorization': 'Bearer ' + token,
+          'Content-Type': 'application/json'
+        }
       });
-    }));
 
-    updateCounts();
-  </script>
+      if (!response.ok) {
+        throw new Error('Erro ao buscar vacinas');
+      }
+
+      const vacinas = await response.json();
+      atualizarTabelaVacinas(vacinas);
+
+    } catch (error) {
+      console.error(error);
+      alert('Não foi possível carregar as vacinas.');
+    }
+  }
+
+  // Carregar vacinas ao abrir a página
+  window.addEventListener('DOMContentLoaded', carregarVacinas);
+</script>
+
 </body>
-<script src="/front/js/carteira.js"></script>
+<script src="/front/carteira.js"></script>
 </html>
