@@ -4,7 +4,10 @@ import cors from 'cors';
 import authRoutes from './routes/authRoutes.js';
 import vaccineRoutes from './routes/vaccineRoutes.js';
 import { sequelize } from './config/db.js';
-
+import './models/User.js';
+import './models/Vaccine.js';
+import './models/UserVaccine.js';
+import './models/associations.js';
 dotenv.config();
 
 const app = express();
