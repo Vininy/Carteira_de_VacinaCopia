@@ -3,15 +3,26 @@ import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
 export const register = async (req, res) => {
-  const { nome, email, cpf, senha } = req.body;
+  const { nome, email, cpf, senha, dataNascimento, tipoSanguineo } = req.body;
+
   try {
     const senhaHash = await bcrypt.hash(senha, 10);
-    const novoUsuario = await User.create({ nome, email, cpf, senha: senhaHash });
+    const novoUsuario = await User.create({
+      nome,
+      email,
+      cpf,
+      senha: senhaHash,
+      dataNascimento,       // 👈 obrigatório
+      tipoSanguineo         // 👈 opcional
+    });
+
     res.status(201).json({ message: 'Usuário criado com sucesso!' });
   } catch (err) {
+    console.error('Erro ao cadastrar usuário:', err); // log detalhado no terminal
     res.status(400).json({ error: 'Erro ao cadastrar usuário', details: err.message });
   }
 };
+
 
 export const login = async (req, res) => {
   const { email, senha } = req.body;
