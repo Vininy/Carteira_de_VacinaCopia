@@ -1,18 +1,37 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/db.js';
-import { Vaccine } from './Vaccine.js';
-import { UserVaccine } from './UserVaccine.js';
 
 export const User = sequelize.define('User', {
-  // seus campos aqui...
+  nome: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  email: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  cpf: {
+    type: DataTypes.STRING,
+    allowNull: false,
+    unique: true
+  },
+  senha: {
+    type: DataTypes.STRING,
+    allowNull: false
+  },
+  dataNascimento: {
+    type: DataTypes.DATEONLY,
+    allowNull: false,
+    field: 'data_nascimento'
+  },
+  tipoSanguineo: {
+    type: DataTypes.STRING,
+    allowNull: true,
+    field: 'tipo_sanguineo'
+  }
 }, {
   tableName: 'users',
   freezeTableName: true,
   timestamps: false
-});
-
-User.belongsToMany(Vaccine, {
-  through: UserVaccine,
-  foreignKey: 'user_id',    // nome da coluna no banco
-  otherKey: 'vacina_id'     // nome da coluna no banco (não vaccine_id)
 });
