@@ -1,0 +1,86 @@
+ * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Roboto', sans-serif; }
+    body { background: #f2f4f7; display: flex; justify-content: center; align-items: flex-start; padding: 20px; }
+    .card {
+      background: #fff;
+      max-width: 1000px;
+      width: 100%;
+      padding: 24px;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      position: relative;
+      transition: padding 0.3s;
+    }
+    /* Top action buttons */
+    .icon-home, .icon-add {
+      position: absolute;
+      top: 24px;
+      width: 28px;
+      height: 28px;
+      cursor: pointer;
+      opacity: 0.8;
+      transition: opacity 0.2s;
+      text-indent: -9999px;
+    }
+    .icon-home:hover, .icon-add:hover { opacity: 1; }
+    .icon-home { right: 24px; background: url('https://img.icons8.com/ios-glyphs/30/000000/home.png') center/contain no-repeat; }
+    .icon-add { right: 64px; background: url('https://img.icons8.com/ios-glyphs/30/000000/plus-math.png') center/contain no-repeat; }
+
+    header { display: flex; align-items: center; margin-bottom: 24px; }
+    .icon-shield { width: 28px; height: 28px; background: url('https://img.icons8.com/fluency-systems-filled/48/vaccine.png') center/contain no-repeat; }
+    header h1 { font-size: 1.5rem; font-weight: 500; margin-left: 12px; color: #333; }
+
+    .stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 24px;
+    }
+    .stat {
+      flex: 1 1 200px;
+      display: flex;
+      align-items: center;
+      padding: 12px;
+      background: #fff;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .stat.selected { background: #eaf1ff; border-color: #377dff; }
+    .stat:hover { background: #f5faff; }
+    .stat-icon { width: 24px; height: 24px; margin-right: 8px; flex-shrink: 0; }
+    .stat-text { display: flex; flex-direction: column; }
+    .stat-text span:first-child { font-size: 0.9rem; color: #555; }
+    .stat-text span:last-child { font-size: 1.3rem; font-weight: 600; color: #111; }
+
+    .progress { margin-bottom: 24px; }
+    .progress-label { font-size: 0.9rem; color: #555; margin-bottom: 6px; }
+    .progress-bar { width: 100%; height: 10px; background: #e0e0e0; border-radius: 5px; overflow: hidden; }
+    .progress-bar-inner { width: 80%; height: 100%; background: #377dff; transition: width 0.3s; }
+
+    .table-container { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; min-width: 600px; }
+    th, td { padding: 12px 8px; text-align: left; }
+    th { background: #fafafa; color: #666; font-weight: 500; font-size: 0.9rem; border-bottom: 2px solid #e0e0e0; }
+    td { border-bottom: 1px solid #e0e0e0; font-size: 0.9rem; color: #333; }
+    .next-dose { font-size: 0.8rem; color: #d32f2f; }
+    .status { display: flex; align-items: center; font-weight: 500; }
+    .status .dot { width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+    .status-completa .dot { background: #2e7d32; }
+    .status-pendente .dot { background: #d32f2f; }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .card { padding: 16px; }
+      header h1 { font-size: 1.3rem; }
+      .icon-home, .icon-add { top: 16px; width: 24px; height: 24px; }
+      .icon-home { right: 16px; }
+      .icon-add { right: 52px; }
+      .stats { gap: 8px; }
+      .stat { padding: 10px; }
+      .stat-text span:first-child { font-size: 0.8rem; }
+      .stat-text span:last-child { font-size: 1.1rem; }
+      .progress-label { font-size: 0.8rem; }
+      .progress-bar { height: 8px; }
+      th, td { padding: 10px 6px; font-size: 0.8rem; }
+    }

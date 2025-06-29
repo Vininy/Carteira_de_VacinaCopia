@@ -1,0 +1,282 @@
+/*
+  Estilos para a tela de Notificações
+  - Fundo branco
+  - Elementos centralizados e espaçados
+  - Botão verde com texto branco
+  Ajustes de espaçamento feitos conforme solicitado:
+  1. Espaçamento consistente e proporcional
+  2. Espaçamento responsivo com uso de rem
+  3. .form-group gap aumentado para 12px
+  4. Espaço abaixo do h1 aumentado para 32px
+  5. Espaço entre opções de notificação reduzido para 12px
+*/
+
+body {
+    background: #fff;
+    font-family: 'Segoe UI', Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha todo o conteúdo à esquerda */
+    justify-content: flex-start;
+}
+
+.main-notificacao-wrapper {
+    width: 100%;
+    max-width: 27rem;
+    min-width: 20rem;
+    margin: 0 0 0 64px; /* Espaço maior da borda esquerda */
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha todos os elementos à esquerda */
+    box-sizing: border-box;
+    padding-top: 3rem;
+}
+
+.notificacao-header {
+    width: 100%;
+    padding: 0 0 2rem 0;
+    text-align: left;
+    border-bottom: none;
+    padding-left: 0;
+    box-sizing: border-box;
+}
+
+.notificacao-header h1 {
+    margin: 1.5rem 0 1.2rem 4rem; /* Aproxima o título do campo telefone */
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: #222;
+    text-align: left;
+    letter-spacing: -1px;
+}
+
+.form-notificacao {
+    width: 100%;
+    background: #fff;
+    padding: 0;
+    border-radius: 12px;
+    box-shadow: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem; /* Espaço mínimo entre os grupos do formulário */
+    align-items: flex-start; /* Alinha todos os campos à esquerda */
+    margin: 0;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem; /* gap aumentado para 12px (0.75rem) */
+    align-items: flex-start;
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+.form-group label {
+    font-size: 1.05rem;
+    color: #444;
+    font-weight: 500;
+    text-align: left;
+    margin-bottom: 2px;
+}
+
+.form-group input[type="text"],
+.form-group input[type="email"] {
+    padding: 0.75rem 0.9rem;
+    border: 1.5px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+    background: #fafafa;
+}
+
+.form-group input[type="text"] {
+    width: 100vw; /* Agora ocupa o dobro da largura anterior (toda a tela) */
+    min-width: 320px;
+    max-width: 1200px;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+.form-group input[type="email"] {
+    width: 100vw; /* Igual ao campo de telefone */
+    min-width: 320px;
+    max-width: 1200px;
+    margin-left: 0;
+    margin-right: 0;
+    box-sizing: border-box;
+}
+
+.form-group input:focus {
+    border: 1.5px solid #4CAF50;
+    background: #fff;
+}
+
+.form-group span {
+    font-size: 1.05rem;
+    color: #444;
+    font-weight: 500;
+    margin-bottom: 2px;
+}
+
+.notificacao-opcoes {
+    margin-top: 0;
+    display: flex;
+    flex-direction: column; /* Alterado para exibir opções em coluna (vertical) */
+    gap: 1.1rem;
+    align-items: flex-start;
+    flex-wrap: nowrap; /* Impede a quebra para linha seguinte */
+}
+
+/* Checkbox quadrado, sem borda, apenas com leve sombra de profundidade */
+.notificacao-opcoes input[type="checkbox"] {
+    width: 32px;
+    height: 32px;
+    margin: 0 8px 0 0;
+    align-self: flex-start;
+    box-shadow: 0 2px 8px 0 #b0b0b0;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    transition: box-shadow 0.2s;
+    z-index: 2;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+.notificacao-opcoes input[type="checkbox"]:checked::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 7px;
+    top: 7px;
+    width: 14px;
+    height: 14px;
+    border-radius: 0;
+    background: #4CAF50;
+}
+
+/* Checkbox da declaração de privacidade ainda menor (16px) */
+.checkbox-lgpd {
+    width: 16px;
+    height: 16px;
+    margin: 0 8px 0 0;
+    align-self: flex-start;
+    box-shadow: 0 2px 8px 0 #b0b0b0;
+    border-radius: 0;
+    background: transparent;
+    border: none;
+    transition: box-shadow 0.2s;
+    z-index: 2;
+    appearance: none;
+    -webkit-appearance: none;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    display: inline-block;
+}
+
+.checkbox-lgpd:checked::before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 3px;
+    top: 3px;
+    width: 6px;
+    height: 6px;
+    border-radius: 0;
+    background: #4CAF50;
+}
+
+.privacidade {
+    font-size: 0.97rem;
+    color: #666;
+    background: #f7f7f7;
+    padding: 0.9rem 0.75rem;
+    border-radius: 8px;
+    margin-top: 0.5rem;
+    text-align: left;
+    align-self: stretch;
+}
+
+.btn-salvar {
+    margin-top: 0.7rem;
+    width: auto;
+    min-width: 240px;
+    max-width: 100%;
+    padding: 0.9rem 2.5rem;
+    background: #4CAF50;
+    color: #fff;
+    font-size: 1.15rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.2s;
+    box-shadow: 0 2px 8px rgba(76,175,80,0.08);
+    display: block;
+    margin-left: 480px;
+    margin-right: auto;
+    white-space: nowrap; /* Texto em linha única, sem quebra */
+}
+
+.btn-salvar:hover {
+    background: #388e3c;
+}
+
+@media (max-width: 600px) {
+    .main-notificacao-wrapper {
+        max-width: 98vw;
+        min-width: unset;
+        padding-top: 1.5rem;
+        padding-left: 0.5rem;
+        padding-right: 0.5rem;
+    }
+    .form-notificacao {
+        padding: 0;
+    }
+}
+
+@media (max-width: 500px) {
+    .form-group input[type="text"] {
+        width: 100%; /* Em telas pequenas, ocupa toda a largura disponível */
+        min-width: unset;
+    }
+}
+
+@media (max-width: 700px) {
+    .main-notificacao-wrapper {
+        margin-left: 0;
+        padding-left: 16px;
+    }
+    .form-group input[type="text"] {
+        width: 100%;
+        min-width: unset;
+    }
+    .btn-salvar {
+        margin-left: 0;
+        margin-right: auto;
+    }
+}
+
+@media (max-width: 1200px) {
+    .form-group input[type="text"] {
+        width: 100vw;
+        min-width: unset;
+    }
+    .form-group input[type="email"] {
+        width: 100vw;
+        min-width: unset;
+    }
+}

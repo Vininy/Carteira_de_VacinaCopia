@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Carteira de Vacinação</title>
+  <link rel="stylesheet" href="/Carteira_de_Vacina/front/css/styles.css">
+   
+</head>
+<body>
+  <div class="card">
+    <a href="cadastro.html" class="icon-add" title="Cadastrar nova vacina">Add</a>
+    <a href="telaPrincipal.html" class="icon-home" title="Voltar ao menu">Menu</a>
+
+    <header>
+      <div class="icon-shield"></div>
+      <h1>Carteira de Vacinação</h1>
+    </header>
+
+    <div class="stats">
+      <button class="stat selected" data-filter="all">
+        <div class="stat-icon" style="background:url('/front/img/image00.png') center/contain no-repeat;"></div>
+        <div class="stat-text">
+          <span>Vacinas Registradas</span>
+          <span class="count">0</span>
+        </div>
+      </button>
+      <button class="stat" data-filter="applied">
+        <div class="stat-icon" style="background:url('/front/img/image01.png') center/contain no-repeat;"></div>
+        <div class="stat-text">
+          <span>Doses Aplicadas</span>
+          <span class="count">0</span>
+        </div>
+      </button>
+      <button class="stat" data-filter="pending">
+        <div class="stat-icon" style="background:url('/front/img/image02.png') center/contain no-repeat;"></div>
+        <div class="stat-text">
+          <span>Doses Pendentes</span>
+          <span class="count">0</span>
+        </div>
+      </button>
+      <button class="stat" data-filter="next">
+        <div class="stat-icon" style="background:url('/front/img/image03.png') center/contain no-repeat;"></div>
+        <div class="stat-text">
+          <span>Próxima Agendada</span>
+          <span class="count">0</span>
+        </div>
+      </button>
+    </div>
+
+    <div class="progress">
+      <div class="progress-label">Processo: 80% completo</div>
+      <div class="progress-bar"><div class="progress-bar-inner"></div></div>
+    </div>
+
+    <div class="table-container">
+      <table>
+        <thead>
+          <tr>
+            <th>Vacina</th><th>Dose</th><th>Data Aplicação</th><th>Próxima Dose</th><th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr data-status="pending" data-next="false">
+            <td>Hepatite B</td><td>1 de 3</td><td>01/05/2025</td>
+            <td><span class="next-dose">Atrasada há 56 dias</span></td>
+            <td><div class="status status-pendente"><div class="dot"></div><span>Pendente</span></div></td>
+          </tr>
+          <tr data-status="complete" data-next="false">
+            <td>Difteria, Tétano, Pertussis (dTpa)</td><td>Única</td><td>05/03/2025</td>
+            <td>–</td><td><div class="status status-completa"><div class="dot"></div><span>Completa</span></div></td>
+          </tr>
+          <tr data-status="pending" data-next="true">
+            <td>Tríplice Viral</td><td>1 de 2</td><td>01/06/2025</td>
+            <td>7 dias</td><td><div class="status status-pendente"><div class="dot"></div><span>Pendente</span></div></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const buttons = document.querySelectorAll('.stat');
+    const rows = document.querySelectorAll('tbody tr');
+    const updateCounts = () => {
+      document.querySelector('[data-filter="all"] .count').textContent = rows.length;
+      document.querySelector('[data-filter="applied"] .count').textContent = document.querySelectorAll('tbody tr[data-status="complete"]').length;
+      document.querySelector('[data-filter="pending"] .count').textContent = document.querySelectorAll('tbody tr[data-status="pending"]').length;
+      document.querySelector('[data-filter="next"] .count').textContent = document.querySelectorAll('tbody tr[data-next="true"]').length;
+    };
+
+    buttons.forEach(btn => btn.addEventListener('click', () => {
+      buttons.forEach(b => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      const filter = btn.dataset.filter;
+      rows.forEach(row => {
+        row.style.display = (
+          filter === 'all' ||
+          (filter === 'pending' && row.dataset.status === 'pending') ||
+          (filter === 'applied' && row.dataset.status === 'complete') ||
+          (filter === 'next' && row.dataset.next === 'true')
+        ) ? '' : 'none';
+      });
+    }));
+
+    updateCounts();
+  </script>
+</body>
+</html>

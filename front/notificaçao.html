@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notificações</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="notificacao.css">
+</head>
+<body>
+    <!-- Cabeçalho com título alinhado à esquerda -->
+    <header class="notificacao-header" style="display: flex; align-items: flex-end; gap: 1.5rem;">
+        <img src="grafico-ilustrativo-v2.svg" alt="Gráfico de barras e linhas" style="height: 100px; width: auto; margin-left: 0; background: #fff; border-radius: 8px; box-shadow: 0 2px 8px #0001;" />
+        <h1 style="margin: 0;">Notificações</h1>
+    </header>
+    <main class="main-notificacao-wrapper">
+        <!-- Formulário de preferências de notificação -->
+        <form class="form-notificacao">
+            <!-- Campo de telefone -->
+            <div class="form-group">
+                <label for="telefone">Telefone (WhatsApp ou SMS)</label>
+                <input type="text" id="telefone" name="telefone" placeholder="">
+            </div>
+            <!-- Campo de e-mail -->
+            <div class="form-group">
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" placeholder="">
+            </div>
+            <!-- Opções de notificação -->
+            <div class="form-group">
+                <span>Escolha como deseja ser notificado:</span>
+                <div class="notificacao-opcoes">
+                    <label><input type="checkbox" name="opcao" value="email"> E-mail</label>
+                    <label><input type="checkbox" name="opcao" value="sms"> SMS</label>
+                    <label><input type="checkbox" name="opcao" value="whatsapp"> WhatsApp</label>
+                </div>
+            </div>
+            <!-- Declaração de privacidade -->
+            <div class="form-group" style="margin-bottom: 0;">
+                <div class="privacidade" style="display: flex; align-items: center; justify-content: center; gap: 10px; width: 90vw; max-width: 1400px; margin-left: 0; margin-right: 0; background: none; box-sizing: border-box;">
+                    <input type="checkbox" id="aceite-lgpd" name="aceite-lgpd" class="checkbox-lgpd" style="margin-left: 0;">
+                    <label for="aceite-lgpd" style="font-weight: 400; cursor: pointer; text-align: left; width: 100%; white-space: normal;">
+                        Declaro que li e estou de acordo com o tratamento dos meus dados pessoais, incluindo dados sensíveis relacionados à saúde, em conformidade com a Lei nº 13.709/2018- Lei Geral  de Proteção de Dados (LGPD), para as finalidade de gerenciamento da minha carteira de vacinação digital, envio de notificações sobre vacinas pendentes, atrasadas ou futuras, e geração de relatórios relacionados ao meu status vacinal. Autorizo o contato por e-mail, WhatsApp, SMS ou outros meios informados, ciente de que meus dados serão utilizados de forma segura, ética e restrita às finalidades mencionadas, podendo solicitar a qualquer momento a revogação do consentimento, correção ou exclusão dos meus dados, conforme os direitos assegurados pela LGPD.
+                    </label>
+                </div>
+            </div>
+            <!-- Botão de ação -->
+            <button type="submit" class="btn-salvar">Salvar Preferências de Notificações</button>
+        </form>
+    </main>
+</body>
+</html>
