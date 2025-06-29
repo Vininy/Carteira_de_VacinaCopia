@@ -17,8 +17,8 @@ app.use(cors({
 app.use(express.json());
 
 // ✅ Registrar rotas DEPOIS do app ser criado
-app.use('/api', authRoutes);
-app.use('/api', vaccineRoutes);
+app.use('/api/auth', authRoutes);
+app.use('/api/vacinas', vaccineRoutes);
 
 // Iniciar servidor
 async function startServer() {
