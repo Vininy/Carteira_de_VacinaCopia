@@ -1,11 +1,10 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import authRoutes from './routes/authRoutes.js';
-import { sequelize } from './config/db.js';
 import cors from 'cors';
-import vaccineRoutes from './routes/vaccineRoutes.js';
 
-app.use('/api', vaccineRoutes);
+import authRoutes from './routes/authRoutes.js';
+import vaccineRoutes from './routes/vaccineRoutes.js';
+import { sequelize } from './config/db.js';
 
 dotenv.config();
 
@@ -18,17 +17,17 @@ app.use(cors({
 
 app.use(express.json());
 
-// Função async para conectar, sincronizar e iniciar servidor
+// ✅ Aqui agora está no lugar certo
+app.use('/api', authRoutes);
+app.use('/api', vaccineRoutes);  // Certo agora
+
+// Conecta ao banco e inicia o servidor
 async function startServer() {
   try {
     await sequelize.authenticate();
     console.log('🎉 Conectado ao PostgreSQL!');
 
-    // Sincroniza os modelos e cria as tabelas se não existirem
-    await sequelize.sync();
-
-    // Rotas
-    app.use('/api', authRoutes);
+    await sequelize.sync(); // Cria tabelas se necessário
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
