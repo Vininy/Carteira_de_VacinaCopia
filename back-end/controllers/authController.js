@@ -12,8 +12,8 @@ export const register = async (req, res) => {
       email,
       cpf,
       senha: senhaHash,
-      dataNascimento,       // 👈 obrigatório
-      tipoSanguineo         // 👈 opcional
+      dataNascimento,       
+      tipoSanguineo        
     });
 
     res.status(201).json({ message: 'Usuário criado com sucesso!' });

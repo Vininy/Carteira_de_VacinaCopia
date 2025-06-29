@@ -201,3 +201,8 @@ body {
 .confirm-register-button:hover {
     background-color: #218838;
 }
+
+.register-vaccine-button.selected {
+    background-color: #4caf50;
+    color: white;
+}

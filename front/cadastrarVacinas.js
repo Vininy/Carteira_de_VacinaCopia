@@ -1,124 +1,79 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const filterButtons = document.querySelectorAll('.filter-button');
     const vaccineSections = document.querySelectorAll('.vaccine-section');
     const confirmRegisterButton = document.getElementById('confirmRegisterButton');
     const registerVaccineButtons = document.querySelectorAll('.register-vaccine-button');
 
-    // Funções para gerenciar o estado do usuário e vacinas no localStorage
-    function getUsuarioLogado() {
-        return JSON.parse(localStorage.getItem('usuarioLogado'));
+    const selectedVaccines = new Set();
+
+    // Mostra a seção "18+" por padrão
+    showVaccineSection('18-plus');
+
+    function showVaccineSection(ageGroupSuffix) {
+        vaccineSections.forEach(section => {
+            section.classList.toggle('hidden', section.id !== `section-${ageGroupSuffix}`);
+        });
+
+        filterButtons.forEach(button => {
+            button.classList.toggle('active', button.dataset.ageGroup === ageGroupSuffix);
+        });
     }
 
-    function setUsuarioLogado(usuario) {
-        localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
-    }
+    function toggleVaccineSelection(button) {
+        const vaccineId = button.dataset.vaccineId;
 
-    function getAllUsuarios() {
-        return JSON.parse(localStorage.getItem('usuarios')) || [];
-    }
-
-    function setAllUsuarios(usuarios) {
-        localStorage.setItem('usuarios', JSON.stringify(usuarios));
-    }
-
-    // Inicializa a exibição das seções e o estado dos botões de vacina
-    function initializeVacunasScreen() {
-        // Exibe a seção ativa por padrão (18+ anos, usando o novo sufixo)
-        showVaccineSection('18-plus');
-
-        // Carrega as vacinas já registradas para o usuário logado
-        const usuario = getUsuarioLogado();
-        if (usuario && usuario.vacinasTomadas) {
-            usuario.vacinasTomadas.forEach(vacinaId => {
-                const button = document.querySelector(`.register-vaccine-button[data-vaccine-id="${vacinaId}"]`);
-                if (button) {
-                    markVaccineAsRegistered(button);
-                }
-            });
+        if (selectedVaccines.has(vaccineId)) {
+            selectedVaccines.delete(vaccineId);
+            button.textContent = 'Registrar Vacina';
+            button.classList.remove('selected');
+        } else {
+            selectedVaccines.add(vaccineId);
+            button.textContent = 'Selecionada';
+            button.classList.add('selected');
         }
     }
 
-    // Função para mostrar a seção de vacinas correta e ocultar as outras
-    // O parâmetro ageGroupSuffix agora deve vir formatado corretamente (ex: "18-plus")
-    function showVaccineSection(ageGroupSuffix) {
-        vaccineSections.forEach(section => {
-            // Comparação direta com o ID
-            if (section.id === `section-${ageGroupSuffix}`) {
-                section.classList.remove('hidden');
-            } else {
-                section.classList.add('hidden');
-            }
-        });
-
-        // Atualiza a classe 'active' nos botões de filtro
-        filterButtons.forEach(button => {
-            if (button.dataset.ageGroup === ageGroupSuffix) {
-                button.classList.add('active');
-            } else {
-                button.classList.remove('active');
-            }
-        });
-    }
-
-    // Função para marcar um botão de vacina como "Registrado"
-    function markVaccineAsRegistered(button) {
-        button.textContent = 'Registrada'; // Muda o texto
-        button.classList.add('registered'); // Adiciona classe para mudar a cor/estilo
-        button.disabled = true; // Desabilita o botão para evitar cliques repetidos
-    }
-
-    // Lida com o clique nos botões de filtro de idade
+    // Evento dos filtros de idade
     filterButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            // Pega o valor data-age-group diretamente
-            const ageGroup = this.dataset.ageGroup;
-            showVaccineSection(ageGroup);
+        button.addEventListener('click', function () {
+            showVaccineSection(this.dataset.ageGroup);
         });
     });
 
-    // Lida com o clique nos botões "Registrar Vacina"
+    // Clique em "Registrar Vacina"
     registerVaccineButtons.forEach(button => {
-        button.addEventListener('click', function() {
-            const vaccineId = this.dataset.vaccine-id;
-            const usuario = getUsuarioLogado();
-
-            if (usuario) {
-                if (!usuario.vacinasTomadas) {
-                    usuario.vacinasTomadas = [];
-                }
-                if (!usuario.vacinasTomadas.includes(vaccineId)) {
-                    usuario.vacinasTomadas.push(vaccineId);
-                    setUsuarioLogado(usuario);
-
-                    let todosUsuarios = getAllUsuarios();
-                    todosUsuarios = todosUsuarios.map(user => {
-                        if (user.id === usuario.id) {
-                            return usuario;
-                        }
-                        return user;
-                    });
-                    setAllUsuarios(todosUsuarios);
-
-                    markVaccineAsRegistered(this);
-                    alert(`Vacina "${vaccineId}" registrada para ${usuario.nome}.`);
-                } else {
-                    alert(`Vacina "${vaccineId}" já está registrada.`);
-                }
-            } else {
-                alert('Nenhum usuário logado. Por favor, faça login para registrar vacinas.');
-                window.location.href = 'login.html';
-            }
+        button.addEventListener('click', function () {
+            toggleVaccineSelection(this);
         });
     });
 
-    // Lida com o clique no botão "Confirmar Registro"
-    if (confirmRegisterButton) {
-        confirmRegisterButton.addEventListener('click', function() {
-            alert('Registro(s) de vacina(s) confirmado(s)!');
-            window.location.href = 'telaPrincipal.html';
-        });
-    }
+    // Clique em "Confirmar Registro"
+    confirmRegisterButton.addEventListener('click', function () {
+        if (selectedVaccines.size === 0) {
+            alert('Selecione pelo menos uma vacina.');
+            return;
+        }
 
-    // Inicializa a tela quando o DOM estiver carregado
-    initializeVacunasScreen();
+        const vacinas = Array.from(selectedVaccines);
+
+        fetch('https://carteira-de-vacina.onrender.com/api/vacinas', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include',
+            body: JSON.stringify({ vacinas })
+        })
+            .then(res => res.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert('Vacinas registradas com sucesso!');
+                    window.location.href = 'telaPrincipal.html';
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao registrar vacinas:', error);
+                alert('Erro ao registrar vacinas.');
+            });
+    });
 });
