@@ -69,22 +69,23 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /* Login */
-    if (loginForm) {
-        loginForm.addEventListener('submit', function (e) {
-            e.preventDefault();
 
-            const loginEmail = document.getElementById('loginEmail').value;
-            const loginSenha = document.getElementById('loginSenha').value;
+        if (loginForm) {
+            loginForm.addEventListener('submit', function (e) {
+                e.preventDefault();
 
-            fetch('https://carteira-de-vacina.onrender.com/api/login', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ email: loginEmail, senha: loginSenha })
-            })
+                const loginEmail = document.getElementById('loginEmail').value;
+                const loginSenha = document.getElementById('loginSenha').value;
+
+                fetch('https://carteira-de-vacina.onrender.com/api/login', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: loginEmail, senha: loginSenha }),
+                    credentials: 'include' // Envia cookies para manter sessão
+                })
                 .then(response => response.json())
                 .then(data => {
-                    if (data.token) {
-                        localStorage.setItem('token', data.token); // você pode manter o token se quiser autenticação depois
+                    if (data.success || !data.error) {
                         alert('Login realizado com sucesso!');
                         window.location.href = 'telaPrincipal.html';
                     } else {
@@ -95,8 +96,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     console.error('Erro no login:', error);
                     alert('Erro ao tentar login');
                 });
-        });
-    }
+            });
+        }
 
     /* Cadastrar Vacinas */
     if (formCadastrarVacinas) {
