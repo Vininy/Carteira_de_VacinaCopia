@@ -3,6 +3,9 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/authRoutes.js';
 import { sequelize } from './config/db.js';
 import cors from 'cors';
+import vaccineRoutes from './routes/vaccineRoutes.js';
+
+app.use('/api', vaccineRoutes);
 
 dotenv.config();
 
