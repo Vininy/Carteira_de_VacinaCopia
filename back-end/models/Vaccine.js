@@ -20,3 +20,9 @@ export const Vaccine = sequelize.define('Vaccine', {
   freezeTableName: true,
    timestamps: false          
 });
+
+Vaccine.belongsToMany(User, {
+  through: UserVaccine,
+  foreignKey: 'vaccine_id',
+  otherKey: 'user_id'
+});
