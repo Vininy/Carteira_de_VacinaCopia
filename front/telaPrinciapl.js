@@ -1,26 +1,4 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const token = localStorage.getItem('token');
-
-    if (!token) {
-        alert("Usuário não está logado. Redirecionando para o login...");
-        window.location.href = 'login.html';
-        return;
-    }
-
-    // Busca dados do usuário autenticado
-    fetch('https://carteira-de-vacina.onrender.com/api/me', {
-        method: 'GET',
-        headers: {
-            'Authorization': `Bearer ${token}`
-        }
-    })
-    .then(res => res.json())
-    .then(usuario => {
-        if (!usuario || usuario.error) {
-            alert("Erro ao obter dados do usuário. Redirecionando para o login...");
-            window.location.href = 'login.html';
-            return;
-        }
 
         // 1. VACINAS APLICADAS
         const vacinas = usuario.vacinasTomadas || [];
@@ -56,4 +34,4 @@ document.addEventListener('DOMContentLoaded', function () {
         alert("Erro ao carregar informações. Redirecionando para o login...");
         window.location.href = 'login.html';
     });
-});
+
