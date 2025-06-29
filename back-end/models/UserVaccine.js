@@ -12,6 +12,10 @@ export const UserVaccine = sequelize.define('UserVaccine', {
     type: DataTypes.DATEONLY,
     allowNull: true
   }
+}, {
+  tableName: 'users',
+  freezeTableName: true,
+  timestamps: false
 });
 
 // Associações (belongsToMany com through)

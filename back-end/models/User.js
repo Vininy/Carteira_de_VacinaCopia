@@ -31,6 +31,7 @@ export const User = sequelize.define('User', {
     field: 'tipo_sanguineo'   
   }
 }, {
-  tableName: 'users',
-  freezeTableName: true
+    tableName: 'users',
+  freezeTableName: true,
+  timestamps: false
 });
