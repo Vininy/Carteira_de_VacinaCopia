@@ -49,18 +49,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
     // Clique em "Confirmar Registro"
     confirmRegisterButton.addEventListener('click', function () {
-        if (selectedVaccines.size === 0) {
+         if (selectedVaccines.size === 0) {
             alert('Selecione pelo menos uma vacina.');
+            return;
+        }   
+
+
+        const vacinas = Array.from(selectedVaccines);
+        const token = localStorage.getItem('token'); // PEGA O TOKEN DO LOCALSTORAGE
+
+        if (!token) {
+            alert('Você precisa fazer login para registrar vacinas.');
+            window.location.href = 'login.html';
             return;
         }
 
-        const vacinas = Array.from(selectedVaccines);
 
         fetch('https://carteira-de-vacina.onrender.com/api/vacinas', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'include',
-            body: JSON.stringify({ vacinas })
+            headers: { 
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`  // ENVIA O TOKEN AQUI
+            },
+            body: JSON.stringify({ vacinas }),
+            credentials: 'include'
         })
             .then(res => res.json())
             .then(data => {
