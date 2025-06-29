@@ -17,5 +17,6 @@ export const Vaccine = sequelize.define('Vaccine', {
   }
 }, {
   tableName: 'vacinas',       
-  freezeTableName: true       
+  freezeTableName: true,
+   timestamps: false          
 });
