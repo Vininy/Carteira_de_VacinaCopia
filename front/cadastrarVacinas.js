@@ -77,3 +77,29 @@ document.addEventListener('DOMContentLoaded', function () {
             });
     });
 });
+
+
+fetch('https://carteira-de-vacina.onrender.com/api/vacinas', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  credentials: 'include',
+  body: JSON.stringify({ vacinas })
+})
+.then(res => {
+  if (!res.ok) {
+    throw new Error(`Erro HTTP! Status: ${res.status}`);
+  }
+  return res.json();
+})
+.then(data => {
+  if (data.error) {
+    alert(data.error);
+  } else {
+    alert('Vacinas registradas com sucesso!');
+    window.location.href = 'telaPrincipal.html';
+  }
+})
+.catch(error => {
+  console.error('Erro ao registrar vacinas:', error);
+  alert('Erro ao registrar vacinas.');
+});
