@@ -16,6 +16,7 @@ export const Vaccine = sequelize.define('Vaccine', {
     unique: true
   }
 }, {
-  timestamps: false    // se não quiser campos createdAt e updatedAt
+  tableName: 'vaccines',      
+  freezeTableName: true       
 });
 
