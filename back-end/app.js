@@ -1,7 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import cors from 'cors';
-
 import authRoutes from './routes/authRoutes.js';
 import vaccineRoutes from './routes/vaccineRoutes.js';
 import { sequelize } from './config/db.js';
@@ -10,30 +9,28 @@ dotenv.config();
 
 const app = express();
 
+// ✅ Configurar CORS e JSON
 app.use(cors({
-  origin: 'http://127.0.0.1:5500', // ou 'http://localhost:5500'
+  origin: 'http://127.0.0.1:5500',
   credentials: true
 }));
-
 app.use(express.json());
 
-// ✅ Aqui agora está no lugar certo
+// ✅ Registrar rotas DEPOIS do app ser criado
 app.use('/api', authRoutes);
-app.use('/api', vaccineRoutes);  // Certo agora
+app.use('/api', vaccineRoutes);
 
-// Conecta ao banco e inicia o servidor
+// Iniciar servidor
 async function startServer() {
   try {
     await sequelize.authenticate();
-    console.log('🎉 Conectado ao PostgreSQL!');
-
-    await sequelize.sync(); // Cria tabelas se necessário
+    await sequelize.sync();
+    console.log('🎉 Banco conectado');
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
       console.log(`🚀 Servidor rodando na porta ${PORT}`);
     });
-
   } catch (error) {
     console.error('Erro ao iniciar servidor:', error);
   }
