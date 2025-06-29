@@ -22,13 +22,15 @@ export const User = sequelize.define('User', {
   },
   dataNascimento: {
     type: DataTypes.DATEONLY,
-    allowNull: false
+    allowNull: false,
+    field: 'data_nascimento'  
   },
   tipoSanguineo: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: true,
+    field: 'tipo_sanguineo'   
   }
 }, {
-  tableName: 'users', // nome exato da tabela que está no seu banco (verifique com \d no psql)
-  freezeTableName: true // impede pluralização automática
+  tableName: 'users',
+  freezeTableName: true
 });

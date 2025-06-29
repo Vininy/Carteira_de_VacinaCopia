@@ -16,7 +16,6 @@ export const Vaccine = sequelize.define('Vaccine', {
     unique: true
   }
 }, {
-  tableName: 'Vaccines', // nome da tabela que você tem no banco
   timestamps: false    // se não quiser campos createdAt e updatedAt
 });
 
