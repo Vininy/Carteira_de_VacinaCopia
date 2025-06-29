@@ -1,5 +1,13 @@
 import { DataTypes } from 'sequelize';
 import { sequelize } from '../config/db.js';
+import { Vaccine } from './Vaccine.js';
+import { UserVaccine } from './UserVaccine.js';
+
+User.belongsToMany(Vaccine, {
+  through: UserVaccine,
+  foreignKey: 'user_id',
+  otherKey: 'vaccine_id'
+});
 
 export const User = sequelize.define('User', {
   nome: {

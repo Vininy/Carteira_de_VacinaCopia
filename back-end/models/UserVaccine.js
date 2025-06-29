@@ -13,11 +13,17 @@ export const UserVaccine = sequelize.define('UserVaccine', {
     allowNull: true
   }
 }, {
-  tableName: 'users',
+  tableName: 'vacinas_usuarios', 
   freezeTableName: true,
-  timestamps: false
+  timestamps: false             
 });
 
 // Associações (belongsToMany com through)
 User.belongsToMany(Vaccine, { through: UserVaccine });
 Vaccine.belongsToMany(User, { through: UserVaccine });
+
+Vaccine.belongsToMany(User, {
+  through: UserVaccine,
+  foreignKey: 'vaccine_id',
+  otherKey: 'user_id'
+});
