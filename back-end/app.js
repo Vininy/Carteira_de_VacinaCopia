@@ -9,7 +9,8 @@ dotenv.config();
 const app = express();
 
 app.use(cors({
-  origin: 'http://127.0.0.1:5500'  // liberar front local
+  origin: 'http://127.0.0.1:5500', // ou 'http://localhost:5500'
+  credentials: true
 }));
 
 app.use(express.json());

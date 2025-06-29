@@ -108,36 +108,29 @@ document.addEventListener('DOMContentLoaded', function () {
             const checkboxes = document.querySelectorAll('input[name="vacinasTomadas"]:checked');
             checkboxes.forEach(cb => vacinasSelecionadas.push(cb.value));
 
-            const token = localStorage.getItem('token');
-
-            if (!token) {
-                alert('Usuário não autenticado. Faça login.');
-                window.location.href = 'login.html';
-                return;
-            }
-
-            // Supondo que a API aceite o envio das vacinas
+            // Faz envio confiando em cookie de sessão (sem localStorage)
             fetch('https://carteira-de-vacina.onrender.com/api/vacinas', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${token}`
+                    'Content-Type': 'application/json'
                 },
+                credentials: 'include', // Envia cookies para autenticação
                 body: JSON.stringify({ vacinas: vacinasSelecionadas })
             })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.error) {
-                        alert(data.error);
-                    } else {
-                        alert('Vacinas cadastradas com sucesso!');
-                        window.location.href = 'telaPrincipal.html';
-                    }
-                })
-                .catch(error => {
-                    console.error('Erro ao cadastrar vacinas:', error);
-                    alert('Erro ao cadastrar vacinas.');
-                });
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    alert(data.error);
+                } else {
+                    alert('Vacinas cadastradas com sucesso!');
+                    window.location.href = 'telaPrincipal.html';
+                }
+            })
+            .catch(error => {
+                console.error('Erro ao cadastrar vacinas:', error);
+                alert('Erro ao cadastrar vacinas.');
+            });
         });
     }
+
 });
