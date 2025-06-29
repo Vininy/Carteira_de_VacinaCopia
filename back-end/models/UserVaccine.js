@@ -9,7 +9,7 @@ export const UserVaccine = sequelize.define('UserVaccine', {
   dataAplicacao: {
     type: DataTypes.DATEONLY,
     allowNull: true,
-    field: 'data_aplicacao'  // aqui o mapeamento correto
+    field: 'data_aplicacao'  // aqui faz o mapeamento para a coluna real do banco
   }
 }, {
   tableName: 'vacinas_usuarios',
