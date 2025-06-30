@@ -128,7 +128,7 @@ A aplicação utiliza o Sequelize para interagir com o banco de dados PostgreSQL
 
 ## 5. Documentação da API 📜
 
-Para uma explicação mais detalhada sobre os **endpoints da API**, consulte o \[[Documentação da API](https://github.com/Vininy/Carteira_de_VacinaCopia/blob/main/doc-api/Documentação_de_Endpoints_da_API.pdf)
+Para uma explicação mais detalhada sobre os **endpoints da API**, consulte o \[[Documentação da API](https://github.com/Vininy/Carteira_de_VacinaCopia/blob/main/doc-api/Documentacao_de_Endpoints_da_API.pdf)
 .
 
 ## 6. Conclusão 🎯
