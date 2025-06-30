@@ -1,4 +1,3 @@
-Aqui está o seu **README.md** corrigido para uso no GitHub:
 
 ````markdown
 # Carteira de Vacinação - Sistema Completo 🚑💉
