@@ -128,7 +128,7 @@
         return;
       }
 
-      const response = await fetch('/api/vaccines', {
+     const response = await fetch('https://carteira-de-vacina.onrender.com/api/minhas-vacinas', {
         headers: {
           'Authorization': 'Bearer ' + token,
           'Content-Type': 'application/json'
