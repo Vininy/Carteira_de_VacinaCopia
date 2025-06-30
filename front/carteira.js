@@ -1,69 +1,103 @@
-document.addEventListener('DOMContentLoaded', async () => {
-  const token = localStorage.getItem('token');
-  if (!token) return window.location.href = 'login.html';
-
-  try {
-    const res = await fetch('http://localhost:3000/api/minhas-vacinas', {
-      headers: { Authorization: `Bearer ${token}` }
-    });
-
-    const vacinas = await res.json();
-
-    const tbody = document.querySelector('tbody');
-    tbody.innerHTML = ''; // limpa conteúdo atual
-
-    vacinas.forEach(vac => {
-      const tr = document.createElement('tr');
-      const aplicada = vac.aplicada;
-      const status = aplicada ? 'complete' : 'pending';
-      const statusLabel = aplicada ? 'Completa' : 'Pendente';
-      const dotClass = aplicada ? 'status-completa' : 'status-pendente';
-
-      const dataAplic = vac.dataAplicacao ? new Date(vac.dataAplicacao).toLocaleDateString('pt-BR') : '—';
-
-      tr.setAttribute('data-status', status);
-      tr.innerHTML = `
-        <td>${vac.nome}</td>
-        <td>Única</td>
-        <td>${dataAplic}</td>
-        <td>–</td>
-        <td><div class="status ${dotClass}"><div class="dot"></div><span>${statusLabel}</span></div></td>
-      `;
-      tbody.appendChild(tr);
-    });
-
-    // Recalcula os contadores
-    updateCounts();
-  } catch (err) {
-    console.error('Erro ao carregar vacinas:', err);
-    alert('Erro ao buscar vacinas. Faça login novamente.');
-    window.location.href = 'login.html';
-  }
+document.addEventListener("DOMContentLoaded", async () => {
+  await carregarVacinas();
 });
 
-function atualizarTabelaVacinas(vacinas) {
-  const tbody = document.querySelector('tbody');
-  tbody.innerHTML = ''; // limpa linhas antigas
-
-  vacinas.forEach(vacina => {
-    const tr = document.createElement('tr');
-    tr.dataset.status = vacina.aplicada ? 'complete' : 'pending';
-    tr.dataset.next = 'false'; // ou lógica pra próxima dose
-
-    tr.innerHTML = `
-      <td>${vacina.nome}</td>
-      <td>--</td> <!-- Dose, você pode adaptar -->
-      <td>${vacina.dataAplicacao || '-'}</td>
-      <td>--</td> <!-- Próxima dose, adaptar -->
-      <td>
-        <div class="status ${vacina.aplicada ? 'status-completa' : 'status-pendente'}">
-          <div class="dot"></div>
-          <span>${vacina.aplicada ? 'Completa' : 'Pendente'}</span>
-        </div>
-      </td>
-    `;
-
-    tbody.appendChild(tr);
+function gerarCabecalhos(vacinas) {
+  const headerRow = document.getElementById("table-headers");
+  if (!headerRow) return;
+  headerRow.innerHTML = "";
+  if (!vacinas || vacinas.length === 0) return;
+  const allKeys = new Set();
+  vacinas.forEach(vacina => Object.keys(vacina).forEach(key => allKeys.add(key)));
+  allKeys.forEach((key) => {
+    const th = document.createElement("th");
+    th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+    headerRow.appendChild(th);
   });
+  if (allKeys.has("aplicada")) {
+    const th = document.createElement("th");
+    th.textContent = "Status";
+    headerRow.appendChild(th);
+  }
 }
 
+function atualizarTabelaVacinas(vacinas) {
+  gerarCabecalhos(vacinas);
+  const tbody = document.getElementById("vacina-table");
+  if (!tbody) return;
+  tbody.innerHTML = "";
+  const headerRow = document.getElementById("table-headers");
+  const colunas = Array.from(headerRow.children).map(th => th.textContent.toLowerCase());
+  vacinas.forEach((vacina) => {
+    const tr = document.createElement("tr");
+    tr.dataset.status = vacina.aplicada ? "complete" : "pending";
+    tr.dataset.next = vacina.proximaDose ? "true" : "false";
+    colunas.forEach((coluna) => {
+      if (coluna === "status") return;
+      const valor = vacina[coluna] ?? "-";
+      const td = document.createElement("td");
+      if (typeof valor === "string" && valor.match(/^\d{4}-\d{2}-\d{2}/)) {
+        td.textContent = new Date(valor).toLocaleDateString("pt-BR");
+      } else if (typeof valor === "boolean") {
+        td.textContent = valor ? "Sim" : "Não";
+      } else {
+        td.textContent = valor;
+      }
+      tr.appendChild(td);
+    });
+    if ("aplicada" in vacina) {
+      const td = document.createElement("td");
+      td.innerHTML = `
+        <div class="status ${vacina.aplicada ? "status-completa" : "status-pendente"}">
+          <div class="dot"></div>
+          <span>${vacina.aplicada ? "Completa" : "Pendente"}</span>
+        </div>
+      `;
+      tr.appendChild(td);
+    }
+    tbody.appendChild(tr);
+  });
+  atualizarContadores(vacinas);
+  atualizarProgresso(vacinas);
+}
+
+function atualizarContadores(vacinas) {
+  document.getElementById("count-all").textContent = vacinas.length;
+  document.getElementById("count-applied").textContent = vacinas.filter(vacina => vacina.aplicada).length;
+  document.getElementById("count-pending").textContent = vacinas.filter(vacina => !vacina.aplicada).length;
+  document.getElementById("count-next").textContent = vacinas.filter(vacina => vacina.proximaDose).length;
+}
+
+function atualizarProgresso(vacinas) {
+  const totalVacinas = vacinas.length;
+  const aplicadas = vacinas.filter(vacina => vacina.aplicada).length;
+  const progresso = totalVacinas ? (aplicadas / totalVacinas) * 100 : 0;
+  document.getElementById("progress-percentage").textContent = `${Math.round(progresso)}%`;
+  document.getElementById("progress-bar").style.width = `${progresso}%`;
+}
+
+async function carregarVacinas() {
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      alert("Usuário não autenticado!");
+      window.location.href = "login.html";
+      return;
+    }
+    const response = await fetch("https://carteira-de-vacina.onrender.com/api/vacinas", {
+      headers: {
+        Authorization: "Bearer " + token,
+        "Content-Type": "application/json",
+      },
+    });
+    if (!response.ok) {
+      throw new Error("Erro ao buscar vacinas");
+    }
+    const vacinas = await response.json();
+    atualizarTabelaVacinas(vacinas);
+  } catch (error) {
+    console.error(error);
+    alert("Não foi possível carregar as vacinas.");
+    window.location.href = "login.html";
+  }
+}

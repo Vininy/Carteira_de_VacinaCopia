@@ -1,157 +1,157 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Carteira de Vacinação</title>
-  <link rel="stylesheet" href="/front/css/styles.css">
-   
-</head>
-<body>
-  <div class="card">
-    <a href="cadastro.html" class="icon-add" title="Cadastrar nova vacina">Add</a>
-    <a href="telaPrincipal.html" class="icon-home" title="Voltar ao menu">Menu</a>
-
-    <header>
-      <div class="icon-shield"></div>
-      <h1>Carteira de Vacinação</h1>
-    </header>
-
-    <div class="stats">
-      <button class="stat selected" data-filter="all">
-        <div class="stat-icon" style="background:url('/front/img/image00.png') center/contain no-repeat;"></div>
-        <div class="stat-text">
-          <span>Vacinas Registradas</span>
-          <span class="count">0</span>
-        </div>
-      </button>
-      <button class="stat" data-filter="applied">
-        <div class="stat-icon" style="background:url('/front/img/image01.png') center/contain no-repeat;"></div>
-        <div class="stat-text">
-          <span>Doses Aplicadas</span>
-          <span class="count">0</span>
-        </div>
-      </button>
-      <button class="stat" data-filter="pending">
-        <div class="stat-icon" style="background:url('/front/img/image02.png') center/contain no-repeat;"></div>
-        <div class="stat-text">
-          <span>Doses Pendentes</span>
-          <span class="count">0</span>
-        </div>
-      </button>
-      <button class="stat" data-filter="next">
-        <div class="stat-icon" style="background:url('/front/img/image03.png') center/contain no-repeat;"></div>
-        <div class="stat-text">
-          <span>Próxima Agendada</span>
-          <span class="count">0</span>
-        </div>
-      </button>
-    </div>
-
-    <div class="progress">
-      <div class="progress-label">Processo: 80% completo</div>
-      <div class="progress-bar"><div class="progress-bar-inner"></div></div>
-    </div>
-
-    <div class="table-container">
-      <table>
-        <thead>
-          <tr>
-            <th>Vacina</th><th>Dose</th><th>Data Aplicação</th><th>Próxima Dose</th><th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr data-status="pending" data-next="false">
-            <td>Hepatite B</td><td>1 de 3</td><td>01/05/2025</td>
-            <td><span class="next-dose">Atrasada há 56 dias</span></td>
-            <td><div class="status status-pendente"><div class="dot"></div><span>Pendente</span></div></td>
-          </tr>
-          <tr data-status="complete" data-next="false">
-            <td>Difteria, Tétano, Pertussis (dTpa)</td><td>Única</td><td>05/03/2025</td>
-            <td>–</td><td><div class="status status-completa"><div class="dot"></div><span>Completa</span></div></td>
-          </tr>
-          <tr data-status="pending" data-next="true">
-            <td>Tríplice Viral</td><td>1 de 2</td><td>01/06/2025</td>
-            <td>7 dias</td><td><div class="status status-pendente"><div class="dot"></div><span>Pendente</span></div></td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-  </div>
-
-  <script>
-  // Função para atualizar a tabela com as vacinas do usuário
-  function atualizarTabelaVacinas(vacinas) {
-    const tbody = document.querySelector('tbody');
-    tbody.innerHTML = ''; // limpa linhas antigas
-
-    vacinas.forEach(vacina => {
-      const tr = document.createElement('tr');
-      tr.dataset.status = vacina.aplicada ? 'complete' : 'pending';
-      tr.dataset.next = 'false'; // aqui você pode implementar a lógica da próxima dose
-
-      tr.innerHTML = `
-        <td>${vacina.nome}</td>
-        <td>--</td> <!-- Dose, adapte se tiver info -->
-        <td>${vacina.dataAplicacao ? new Date(vacina.dataAplicacao).toLocaleDateString('pt-BR') : '-'}</td>
-        <td>--</td> <!-- Próxima dose, adapte se quiser -->
-        <td>
-          <div class="status ${vacina.aplicada ? 'status-completa' : 'status-pendente'}">
-            <div class="dot"></div>
-            <span>${vacina.aplicada ? 'Completa' : 'Pendente'}</span>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Carteira de Vacinação</title>
+    <link rel="stylesheet" href="/css/styles.css" />
+  </head>
+  <body>
+    <div class="card">
+      <a href="cadastro.html" class="icon-add" title="Cadastrar nova vacina">Add</a>
+      <a href="telaPrincipal.html" class="icon-home" title="Voltar ao menu">Menu</a>
+      <header>
+        <div class="icon-shield"></div>
+        <h1>Carteira de Vacinação</h1>
+      </header>
+      <div class="stats">
+        <button class="stat selected" data-filter="all">
+          <div class="stat-icon" style="background: url('/front/img/image00.png') center/contain no-repeat;"></div>
+          <div class="stat-text">
+            <span>Vacinas Registradas</span>
+            <span class="count" id="count-all">0</span>
           </div>
-        </td>
-      `;
-
-      tbody.appendChild(tr);
-    });
-
-    // Atualiza os contadores
-    atualizarContadores();
-  }
-
-  // Função para atualizar os contadores no topo da página
-  function atualizarContadores() {
-    const rows = document.querySelectorAll('tbody tr');
-    document.querySelector('[data-filter="all"] .count').textContent = rows.length;
-    document.querySelector('[data-filter="applied"] .count').textContent = document.querySelectorAll('tbody tr[data-status="complete"]').length;
-    document.querySelector('[data-filter="pending"] .count').textContent = document.querySelectorAll('tbody tr[data-status="pending"]').length;
-    document.querySelector('[data-filter="next"] .count').textContent = document.querySelectorAll('tbody tr[data-next="true"]').length;
-  }
-
-  // Função para carregar os dados da API
-  async function carregarVacinas() {
-    try {
-      const token = localStorage.getItem('token'); // Ajuste conforme onde o token está salvo
-      if (!token) {
-        alert('Usuário não autenticado!');
-        return;
-      }
-
-     const response = await fetch('https://carteira-de-vacina.onrender.com/api/minhas-vacinas', {
-        headers: {
-          'Authorization': 'Bearer ' + token,
-          'Content-Type': 'application/json'
+        </button>
+        <button class="stat" data-filter="applied">
+          <div class="stat-icon" style="background: url('/front/img/image01.png') center/contain no-repeat;"></div>
+          <div class="stat-text">
+            <span>Doses Aplicadas</span>
+            <span class="count" id="count-applied">0</span>
+          </div>
+        </button>
+        <button class="stat" data-filter="pending">
+          <div class="stat-icon" style="background: url('/front/img/image02.png') center/contain no-repeat;"></div>
+          <div class="stat-text">
+            <span>Doses Pendentes</span>
+            <span class="count" id="count-pending">0</span>
+          </div>
+        </button>
+        <button class="stat" data-filter="next">
+          <div class="stat-icon" style="background: url('/front/img/image03.png') center/contain no-repeat;"></div>
+          <div class="stat-text">
+            <span>Próxima Agendada</span>
+            <span class="count" id="count-next">0</span>
+          </div>
+        </button>
+      </div>
+      <div class="progress">
+        <div class="progress-label">Processo: <span id="progress-percentage">0%</span> completo</div>
+        <div class="progress-bar"><div class="progress-bar-inner" id="progress-bar"></div></div>
+      </div>
+      <div class="table-container">
+        <table>
+          <thead>
+            <tr id="table-headers"></tr>
+          </thead>
+          <tbody id="vacina-table"></tbody>
+        </table>
+      </div>
+    </div>
+    <script>
+      function gerarCabecalhos(vacinas) {
+        const headerRow = document.getElementById("table-headers");
+        if (!headerRow) return;
+        headerRow.innerHTML = "";
+        if (!vacinas || vacinas.length === 0) return;
+        const allKeys = new Set();
+        vacinas.forEach(vacina => Object.keys(vacina).forEach(key => allKeys.add(key)));
+        allKeys.forEach((key) => {
+          const th = document.createElement("th");
+          th.textContent = key.charAt(0).toUpperCase() + key.slice(1);
+          headerRow.appendChild(th);
+        });
+        if (allKeys.has("aplicada")) {
+          const th = document.createElement("th");
+          th.textContent = "Status";
+          headerRow.appendChild(th);
         }
-      });
-
-      if (!response.ok) {
-        throw new Error('Erro ao buscar vacinas');
       }
-
-      const vacinas = await response.json();
-      atualizarTabelaVacinas(vacinas);
-
-    } catch (error) {
-      console.error(error);
-      alert('Não foi possível carregar as vacinas.');
-    }
-  }
-
-  // Carregar vacinas ao abrir a página
-  window.addEventListener('DOMContentLoaded', carregarVacinas);
-</script>
-
-</body>
-<script src="/front/carteira.js"></script>
+      function atualizarTabelaVacinas(vacinas) {
+        gerarCabecalhos(vacinas);
+        const tbody = document.getElementById("vacina-table");
+        if (!tbody) return;
+        tbody.innerHTML = "";
+        const headerRow = document.getElementById("table-headers");
+        const colunas = Array.from(headerRow.children).map(th => th.textContent.toLowerCase());
+        vacinas.forEach((vacina) => {
+          const tr = document.createElement("tr");
+          tr.dataset.status = vacina.aplicada ? "complete" : "pending";
+          tr.dataset.next = vacina.proximaDose ? "true" : "false";
+          colunas.forEach((coluna) => {
+            if (coluna === "status") return;
+            const valor = vacina[coluna] ?? "-";
+            const td = document.createElement("td");
+            if (typeof valor === "string" && valor.match(/^\d{4}-\d{2}-\d{2}/)) {
+              td.textContent = new Date(valor).toLocaleDateString("pt-BR");
+            } else if (typeof valor === "boolean") {
+              td.textContent = valor ? "Sim" : "Não";
+            } else {
+              td.textContent = valor;
+            }
+            tr.appendChild(td);
+          });
+          if ("aplicada" in vacina) {
+            const td = document.createElement("td");
+            td.innerHTML = `
+              <div class="status ${vacina.aplicada ? "status-completa" : "status-pendente"}">
+                <div class="dot"></div>
+                <span>${vacina.aplicada ? "Completa" : "Pendente"}</span>
+              </div>
+            `;
+            tr.appendChild(td);
+          }
+          tbody.appendChild(tr);
+        });
+        atualizarContadores(vacinas);
+        atualizarProgresso(vacinas);
+      }
+      function atualizarContadores(vacinas) {
+        document.getElementById("count-all").textContent = vacinas.length;
+        document.getElementById("count-applied").textContent = vacinas.filter(vacina => vacina.aplicada).length;
+        document.getElementById("count-pending").textContent = vacinas.filter(vacina => !vacina.aplicada).length;
+        document.getElementById("count-next").textContent = vacinas.filter(vacina => vacina.proximaDose).length;
+      }
+      function atualizarProgresso(vacinas) {
+        const totalVacinas = vacinas.length;
+        const aplicadas = vacinas.filter(vacina => vacina.aplicada).length;
+        const progresso = totalVacinas ? (aplicadas / totalVacinas) * 100 : 0;
+        document.getElementById("progress-percentage").textContent = `${Math.round(progresso)}%`;
+        document.getElementById("progress-bar").style.width = `${progresso}%`;
+      }
+      async function carregarVacinas() {
+        try {
+          const token = localStorage.getItem("token");
+          if (!token) {
+            alert("Usuário não autenticado!");
+            return;
+          }
+          const response = await fetch("https://carteira-de-vacina.onrender.com/api/vacinas", {
+            headers: {
+              Authorization: "Bearer " + token,
+              "Content-Type": "application/json",
+            },
+          });
+          if (!response.ok) {
+            throw new Error("Erro ao buscar vacinas");
+          }
+          const vacinas = await response.json();
+          atualizarTabelaVacinas(vacinas);
+        } catch (error) {
+          console.error(error);
+          alert("Não foi possível carregar as vacinas.");
+        }
+      }
+      window.addEventListener("DOMContentLoaded", carregarVacinas);
+    </script>
+  </body>
 </html>
