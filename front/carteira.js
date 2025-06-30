@@ -67,12 +67,3 @@ function atualizarTabelaVacinas(vacinas) {
   });
 }
 
-// Exemplo de fetch + atualização da tabela
-const token = localStorage.getItem('token'); // ou de onde guarda o token
-
-fetch('/api/vaccines', {
-  headers: { 'Authorization': 'Bearer ' + token }
-})
-  .then(res => res.json())
-  .then(data => atualizarTabelaVacinas(data))
-  .catch(console.error);
