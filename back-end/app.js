@@ -38,5 +38,14 @@ async function startServer() {
     console.error('Erro ao iniciar servidor:', error);
   }
 }
+app.use(vaccineRoutes);
 
+app.listen(process.env.PORT || 10000, () => {
+  console.log('Servidor rodando...');
+});
 startServer();
+
+
+
+
+
