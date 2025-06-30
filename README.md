@@ -57,8 +57,10 @@ Navegue até a pasta back-end e instale as dependências necessárias:
 ```
 cd backend
 npm install
-Rodar o Back-End:
 ```
+
+Rodar o Back-End:
+
 
 Execute o seguinte comando para iniciar o servidor back-end:
 
@@ -84,8 +86,9 @@ Execute o comando para iniciar a aplicação front-end:
 
 ```
 npm run dev
-O front-end estará acessível em http://localhost:5173 (ou na porta configurada).
 ```
+O front-end estará acessível em http://localhost:5173 (ou na porta configurada).
+
 
 5. Testando a Integração 🔗
 Verifique que ambos os servidores (front-end e back-end) estão rodando.
@@ -93,7 +96,7 @@ Verifique que ambos os servidores (front-end e back-end) estão rodando.
 Interaja com a aplicação acessando o front-end em http://localhost:5173 e verificando as funcionalidades de registro e consulta de vacinas, que fazem requisições para a API do back-end.
 
 3. Estrutura de Pastas 📂
-```
+
 backend/: Contém o servidor da API com Express, Sequelize e autenticação via JWT.
 
 controllers/: Controladores dos endpoints (como login, registro de vacinas, etc.).
@@ -113,7 +116,7 @@ src/: Código fonte da aplicação.
 assets/: Arquivos estáticos, como imagens.
 
 components/: Componentes Vue.js para a interface.
-```
+
 
 4. Banco de Dados 🗄️
 A aplicação utiliza o Sequelize para interagir com o banco de dados PostgreSQL.
