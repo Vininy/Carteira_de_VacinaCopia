@@ -118,7 +118,8 @@ document.addEventListener('DOMContentLoaded', function () {
                     'Authorization': `Bearer ${token}`
                 },
                 credentials: 'include', // Envia cookies para autenticação
-                body: JSON.stringify({ vacinas: Array.from(selectedVaccines) })
+                body: JSON.stringify({ vacinas: vacinasSelecionadas })
+
             })
             .then(response => response.json())
             .then(data => {
